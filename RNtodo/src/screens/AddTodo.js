@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {  FooterTab, Text, Header, Content, Container, Item, Footer, Button, Input } from 'native-base';
+import axios from 'axios';
 
 // import '../components/Redux';
 
@@ -13,15 +14,8 @@ export default class AddTodo extends Component {
 	}
 
 	addButton = () => {
-		fetch('http://192.168.56.1:3000/api/todo', {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				plan: this.state.plan
-			})
+		axios.post('http://192.168.56.1:3000/api/todo', {
+			plan: this.state.plan
 		});
 		this.props.navigation.goBack()
 	}

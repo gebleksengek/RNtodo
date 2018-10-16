@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Content, Spinner, List, Container, Header, Item, Input, ListItem, Text, Fab, Icon } from 'native-base';
 import { FlatList } from 'react-native';
+import axios from 'axios'
 
 
 export default class TodoApp extends Component {
@@ -12,15 +13,12 @@ export default class TodoApp extends Component {
 	}
 
 	componentDidMount(){
-		return fetch('http://192.168.56.1:3000/api/todo')
-		 .then((res) => res.json())
-		 .then((resJson) => {
+		axios.get('http://192.168.56.1:3000/api/todo')
+		 .then((response) => {
 		 	this.setState({
-		 		isLoading: false,
-		 		data: resJson
-		 	}, function(){
-
-		 	});
+		 		data: response.data,
+		 		isLoading: false
+		 	})
 		 })
 	}
 
