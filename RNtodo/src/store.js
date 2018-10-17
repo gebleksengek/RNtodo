@@ -1,9 +1,12 @@
-import {createStore, applyMiddleware} from 'redux';
-import {logger} from 'redux-logger';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise-middleware';
-import todoReducer from './reducers/todo';
+import { logger } from 'redux-logger'
+
+import appReducer from './reducers/index';
 
 const middleware = applyMiddleware(logger, thunk, promise());
 
-const store = createStore(reducer, middleware);
+const store = createStore(appReducer, middleware);
+
+export default store;

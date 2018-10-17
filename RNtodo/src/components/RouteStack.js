@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { createStackNavigator } from 'react-navigation';
 
-import TodoApp from '../screens/TodoApp';
+import TodoApp from '../containers/todo';
 import AddTodo from '../screens/AddTodo';
 
-Route = createStackNavigator({
+RouteStack = createStackNavigator({
 	Main: {
 		screen: TodoApp,
 		navigationOptions: {
@@ -38,4 +38,4 @@ Route = createStackNavigator({
 	headerLayoutPreset: 'center'
 })
 
-export default Route;
+export default RouteStack;

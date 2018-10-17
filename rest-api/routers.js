@@ -7,7 +7,7 @@ router.get('/todo', function(req, res) {
 	 .then(function(result){
 	 	res.send(result);
 	 })
-	console.log('get all');
+	console.log(Date() + ' => GET all');
 });
 
 router.get('/todo/:id', function(req, res){
@@ -16,7 +16,7 @@ router.get('/todo/:id', function(req, res){
 	 	res.send(result);
 	 })
 
-	console.log('get one');
+	console.log(Date() + ' => GET one');
 })
 
 router.post('/todo', function(req, res, next) {
@@ -28,7 +28,7 @@ router.post('/todo', function(req, res, next) {
 	 })
 	 .catch(next)
 
-	console.log('post');
+	console.log(Date() + ' => POST');
 });
 
 router.put('/todo/:id', function(req, res) {
@@ -40,7 +40,7 @@ router.put('/todo/:id', function(req, res) {
 	 	 });
 	 });
 
-	console.log('update');
+	console.log(Date() + ' => PUT');
 });
 
 router.delete('/todo/:id', function(req, res) {
@@ -49,7 +49,7 @@ router.delete('/todo/:id', function(req, res) {
 	 	res.send(result);
 	 });
 
-	console.log('delete');
+	console.log(Date() + ' => DELETE');
 });
 
 module.exports = router;

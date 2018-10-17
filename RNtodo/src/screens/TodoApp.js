@@ -5,32 +5,11 @@ import axios from 'axios'
 
 
 export default class TodoApp extends Component {
-	constructor(){
-		super();
-		this.state = {
-			isLoading: true
-		}
-	}
-
 	componentDidMount(){
-		axios.get('http://192.168.56.1:3000/api/todo')
-		 .then((response) => {
-		 	this.setState({
-		 		data: response.data,
-		 		isLoading: false
-		 	})
-		 })
+		this.props.fetchTodo();
 	}
 
 	render(){
-		if(this.state.isLoading){
-			return(
-				<Container>
-					<Spinner />
-				</Container>
-			)
-		}
-
 		return(
 			<Container>
 				<Header searchBar noShadow style={{ backgroundColor: null }}>
@@ -42,7 +21,7 @@ export default class TodoApp extends Component {
 				<Content>
 					<List>
 						<FlatList
-						 data={this.state.data}
+						 data={this.props.data.todoReducer.todos}
 						 renderItem={({item}) => <ListItem><Text>{item.plan}</Text></ListItem>}
 						 keyExtractor={({_id}, index) => _id}
 						/>

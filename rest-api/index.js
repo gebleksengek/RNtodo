@@ -13,6 +13,7 @@ app.use('/api', routers);
 
 app.use(function(err, req, res, next){
 	res.status(422).send({err: err.message});
+	console.log({err: err.message});
 });
 
 app.listen(3000, function() {

@@ -1,10 +1,16 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 
 // import TodoApp from './src/screens/TodoApp';
-import Route from './src/components/Route';
+import RouteStack from './src/components/RouteStack';
+import store from './src/store';
 
 const App = () => {
-  return <Route />
+  return (
+  	<Provider store={store}>
+  		<RouteStack />
+  	</Provider>
+  )
 }
 
 export default App;

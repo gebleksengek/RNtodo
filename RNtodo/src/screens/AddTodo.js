@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import {  FooterTab, Text, Header, Content, Container, Item, Footer, Button, Input } from 'native-base';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
+import { fetchTodo } from '../actions/todo';
 
 // import '../components/Redux';
 
-export default class AddTodo extends Component {
+class AddTodo extends Component {
 
 	constructor(){
 		super();
@@ -16,8 +19,10 @@ export default class AddTodo extends Component {
 	addButton = () => {
 		axios.post('http://192.168.56.1:3000/api/todo', {
 			plan: this.state.plan
-		});
-		this.props.navigation.goBack()
+		}).then(() => {
+			this.props.dispatch(fetchTodo());
+			this.props.navigation.goBack()
+		})
 	}
 
 	render(){
@@ -40,3 +45,9 @@ export default class AddTodo extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state) => ({
+	
+})
+
+export default connect(mapStateToProps)(AddTodo)
