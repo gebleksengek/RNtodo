@@ -7,5 +7,5 @@ Todo App with React Native & Rest API
 #### Screenshots
 .                                   |  .                        
 :----------------------------------:|:----------------------------------:
-![screenshots1](screenshots/1.jpg)  | ![screenshots2](screenshots/1.jpg)  
-:----------------------------------:|:----------------------------------:
+![screenshots1](screenshots/1.jpg)  | ![screenshots2](screenshots/2.jpg)  
+:----------------------------------:|:---------------------------------:
