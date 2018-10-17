@@ -3,7 +3,7 @@ import {  FooterTab, Text, Header, Content, Container, Item, Footer, Button, Inp
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { fetchTodo } from '../actions/todo';
+import { createTodo ,fetchTodo } from '../actions/todo';
 
 // import '../components/Redux';
 
@@ -17,10 +17,9 @@ class AddTodo extends Component {
 	}
 
 	addButton = () => {
-		axios.post('http://192.168.56.1:3000/api/todo', {
+		this.props.dispatch(createTodo({
 			plan: this.state.plan
-		}).then(() => {
-			this.props.dispatch(fetchTodo());
+		})).then(() => {
 			this.props.navigation.goBack()
 		})
 	}
@@ -30,7 +29,7 @@ class AddTodo extends Component {
 			<Container>
 				<Header searchBar noShadow style={{ backgroundColor: null }}>
 					<Item regular rounded>
-						<Input placeholder='Add Todo' onChangeText={(plan) => this.setState({plan})} />
+						<Input placeholder='Add Todo' onChangeText={(plan) => this.setState({plan: plan})} />
 					</Item>
 				</Header>
 				<Content />
@@ -47,7 +46,7 @@ class AddTodo extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	
+	data: state.todoReducer
 })
 
 export default connect(mapStateToProps)(AddTodo)

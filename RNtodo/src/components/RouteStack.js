@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createStackNavigator } from 'react-navigation';
 
-import TodoApp from '../containers/todo';
+import TodoApp from '../screens/TodoApp';
 import AddTodo from '../screens/AddTodo';
 
 RouteStack = createStackNavigator({

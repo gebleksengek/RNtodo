@@ -1,31 +1,83 @@
 import React, { Component } from 'react';
-import { Content, Spinner, List, Container, Header, Item, Input, ListItem, Text, Fab, Icon } from 'native-base';
+import { Content, List, Spinner, Container, Header, Item, Input, ListItem, Text, Fab, Icon } from 'native-base';
 import { FlatList } from 'react-native';
 import axios from 'axios'
+import { connect } from 'react-redux';
+import { Alert } from 'react-native';
 
+import { fetchTodo, deleteTodo } from '../actions/todo';
 
-export default class TodoApp extends Component {
+class TodoApp extends Component {
+	constructor(){
+		super()
+		this.state = {
+			search: ''
+		}
+	}
+
 	componentDidMount(){
-		this.props.fetchTodo();
+		this.props.dispatch(fetchTodo())
+	}
+
+	deleteConfirm(todo, id){
+		Alert.alert(
+			'Delete Todo',
+			'Deleting' + todo,
+			[
+				{text: 'delete', onPress: () => this.deleteButton(id)}
+			]
+		)
+	}
+
+	deleteButton(id){
+		this.props.dispatch(deleteTodo(id))
 	}
 
 	render(){
+		if(this.props.data.fetching){
+			return(
+				<Content>
+					<Spinner />
+				</Content>
+			)
+		}
+
+		const Filter = this.props.data.todos.filter((item) => {
+			return(item.plan.toLowerCase().indexOf(this.state.search.toLowerCase())!==-1)
+		})
+
+		if(this.state.search === ''){
+			ListTodo = (
+				<List>
+					<FlatList
+					 data={this.props.data.todos}
+					 renderItem={({item}) => <ListItem onPress={() => this.deleteConfirm(item.plan, item._id)}><Text>{item.plan}</Text></ListItem>}
+					 keyExtractor={({_id}, index) => _id}
+					/>
+				</List>
+			)
+		}else{
+			ListTodo = (
+				<List>
+					<FlatList
+					 data={Filter}
+					 renderItem={({item}) => <ListItem onPress={() => this.deleteConfirm(item.plan, item._id)}><Text>{item.plan}</Text></ListItem>}
+					 keyExtractor={({_id}, index) => _id}
+					/>
+				</List>
+			)
+		}
+
 		return(
 			<Container>
 				<Header searchBar noShadow style={{ backgroundColor: null }}>
 					<Item regular rounded>
 						<Icon name='ios-search' />
-						<Input placeholder='Search' />
+						<Input onChangeText={(search) => this.setState({search: search})} placeholder='Search' />
 					</Item>
 				</Header>
 				<Content>
-					<List>
-						<FlatList
-						 data={this.props.data.todoReducer.todos}
-						 renderItem={({item}) => <ListItem><Text>{item.plan}</Text></ListItem>}
-						 keyExtractor={({_id}, index) => _id}
-						/>
-					</List>
+					{ ListTodo }
 				</Content>
 				<Fab
 				 active={8}
@@ -40,3 +92,9 @@ export default class TodoApp extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state) => ({
+	data: state.todoReducer
+});
+
+export default connect(mapStateToProps)(TodoApp);

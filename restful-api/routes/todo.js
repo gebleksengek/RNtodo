@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Todo = require('./models/todo');
+const Todo = require('../models/todo');
 
 router.get('/todo', function(req, res) {
 	Todo.find({})
 	 .then(function(result){
 	 	res.send(result);
 	 })
-	console.log(Date() + ' => GET all');
 });
 
 router.get('/todo/:id', function(req, res){
@@ -15,8 +14,6 @@ router.get('/todo/:id', function(req, res){
 	 .then(function(result){
 	 	res.send(result);
 	 })
-
-	console.log(Date() + ' => GET one');
 })
 
 router.post('/todo', function(req, res, next) {
@@ -27,8 +24,6 @@ router.post('/todo', function(req, res, next) {
 	 	res.send(result);
 	 })
 	 .catch(next)
-
-	console.log(Date() + ' => POST');
 });
 
 router.put('/todo/:id', function(req, res) {
@@ -39,8 +34,6 @@ router.put('/todo/:id', function(req, res) {
 	 	 	res.send(result);
 	 	 });
 	 });
-
-	console.log(Date() + ' => PUT');
 });
 
 router.delete('/todo/:id', function(req, res) {
@@ -48,8 +41,6 @@ router.delete('/todo/:id', function(req, res) {
 	 .then(function(result){
 	 	res.send(result);
 	 });
-
-	console.log(Date() + ' => DELETE');
 });
 
 module.exports = router;

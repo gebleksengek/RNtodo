@@ -1,6 +1,10 @@
 # RNtodo
 Todo App with React Native & Rest API
 
+## Features
+1. Create, Read, Delete Todo
+2. Search Todo
+
 ## Requirement
 - MongoDB
 
