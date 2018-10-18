@@ -8,6 +8,11 @@ Todo App with React Native & Rest API
 ## Requirement
 - MongoDB
 
+## Installation
+1. npm install
+2. react-native upgrade
+3. react-native run-android
+
 #### Screenshots
 .                                   |  .                        
 :----------------------------------:|:----------------------------------:
