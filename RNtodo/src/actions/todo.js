@@ -5,7 +5,7 @@ export function fetchTodo(){
 		type: 'FETCH_TODO',
 		payload: axios({
 			method: 'GET',
-			url: 'http://192.168.56.1:3000/api/todo'
+			url: 'https://apiserveo.serveo.net/api/todo'
 		})
 	};
 }
@@ -15,7 +15,7 @@ export function createTodo(data){
 		type: 'CREATE_TODO',
 		payload: axios({
 			method: 'POST',
-			url: 'http://192.168.56.1:3000/api/todo',
+			url: 'https://apiserveo.serveo.net/api/todo',
 			data: data
 		})
 	}
@@ -26,7 +26,7 @@ export function deleteTodo(id){
 		type: 'DELETE_TODO',
 		payload: axios({
 			method: 'DELETE',
-			url: `http://192.168.56.1:3000/api/todo/${id}`
+			url: `https://apiserveo.serveo.net/api/todo/${id}`
 		})
 	}
 }

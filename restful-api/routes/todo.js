@@ -37,7 +37,7 @@ router.put('/todo/:id', function(req, res) {
 });
 
 router.delete('/todo/:id', function(req, res) {
-	Todo.findOneAndRemove({_id: req.params.id})
+	Todo.findOneAndDelete({_id: req.params.id})
 	 .then(function(result){
 	 	res.send(result);
 	 });

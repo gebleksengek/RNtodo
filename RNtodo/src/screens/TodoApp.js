@@ -22,7 +22,7 @@ class TodoApp extends Component {
 	deleteConfirm(todo, id){
 		Alert.alert(
 			'Delete Todo',
-			'Deleting' + todo,
+			'Deleting ' + todo,
 			[
 				{text: 'delete', onPress: () => this.deleteButton(id)}
 			]
