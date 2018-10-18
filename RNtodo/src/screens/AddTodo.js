@@ -25,6 +25,20 @@ class AddTodo extends Component {
 	}
 
 	render(){
+		if(this.state.plan === ''){
+			submitButton = (
+				<Button block disabled>
+					<Text style={{ fontSize: 15, color: 'white' }}>Add</Text>
+				</Button>
+			)
+		}else{
+			submitButton = (
+				<Button block style={{ backgroundColor: '#2ecc71' }} onPress={this.addButton}>
+					<Text style={{ fontSize: 15, color: 'white' }}>Add</Text>
+				</Button>
+			)
+		}
+
 		return(
 			<Container>
 				<Header searchBar noShadow style={{ backgroundColor: null }}>
@@ -35,9 +49,7 @@ class AddTodo extends Component {
 				<Content />
 				<Footer>
 					<FooterTab>
-						<Button block style={{ backgroundColor: '#2ecc71' }} onPress={this.addButton}>
-							<Text style={{ fontSize: 15, color: 'white' }}>Add</Text>
-						</Button>
+						{submitButton}
 					</FooterTab>
 				</Footer>
 			</Container>
