@@ -46,28 +46,6 @@ class TodoApp extends Component {
 			return(item.plan.toLowerCase().indexOf(this.state.search.toLowerCase())!==-1)
 		})
 
-		if(this.state.search === ''){
-			ListTodo = (
-				<List>
-					<FlatList
-					 data={this.props.data.todos}
-					 renderItem={({item}) => <ListItem onPress={() => this.deleteConfirm(item.plan, item._id)}><Text>{item.plan}</Text></ListItem>}
-					 keyExtractor={({_id}, index) => _id}
-					/>
-				</List>
-			)
-		}else{
-			ListTodo = (
-				<List>
-					<FlatList
-					 data={Filter}
-					 renderItem={({item}) => <ListItem onPress={() => this.deleteConfirm(item.plan, item._id)}><Text>{item.plan}</Text></ListItem>}
-					 keyExtractor={({_id}, index) => _id}
-					/>
-				</List>
-			)
-		}
-
 		return(
 			<Container>
 				<Header searchBar noShadow style={{ backgroundColor: null }}>
@@ -77,7 +55,13 @@ class TodoApp extends Component {
 					</Item>
 				</Header>
 				<Content>
-					{ ListTodo }
+					<List>
+					<FlatList
+						 data={Filter}
+						 renderItem={({item}) => <ListItem onPress={() => this.deleteConfirm(item.plan, item._id)}><Text>{item.plan}</Text></ListItem>}
+						 keyExtractor={({_id}, index) => _id}
+						/>
+					</List>
 				</Content>
 				<Fab
 				 active={8}
