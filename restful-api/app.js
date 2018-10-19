@@ -1,14 +1,14 @@
-var mongoose = require('mongoose');
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
 
-var todoRouter  = require('./routes/todo');
+const todoRouter  = require('./routes/todo');
 
-var app = express();
+const app = express();
 
 mongoose.connect('mongodb://localhost:27017/todo', {useNewUrlParser: true})
 	.then(() => console.log('Connection Success'))
@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, nex){
-	res.status(422).send({err: err.messange});
+	res.status(422).send({err: err.message});
 	console.log({err: err.message});
 })
 
