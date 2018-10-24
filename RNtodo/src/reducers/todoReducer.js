@@ -17,14 +17,23 @@ const todoReducer = function(state=initialState, action){
 			return {...state, fetching: false, error: action.payload}
 			break;
 
-		case 'CREATE_TODO_PENDING':
+			case 'CREATE_TODO_PENDING':
 			return {...state, fetching: true}
 			break;
 		case 'CREATE_TODO_FULFILLED':
 			return {...state, fetching: false, fetched: true, todos: [...state.todos, action.payload.data] }
-			console.log(action.payload.data)
 			break;
 		case 'CREATE_TODO_REJECTED':
+			return {...state, fetching: false, error: action.payload}
+			break;
+
+		case 'UPDATE_TODO_PENDING':
+			return {...state, fetching: true}
+			break;
+		case 'UPDATE_TODO_FULFILLED':
+			return {...state, fetching: false, fetched: true, todos: [...state.todos, action.payload.data] }
+			break;
+		case 'UPDATE_TODO_REJECTED':
 			return {...state, fetching: false, error: action.payload}
 			break;
 

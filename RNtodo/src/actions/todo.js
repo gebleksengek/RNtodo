@@ -5,7 +5,7 @@ export function fetchTodo(){
 		type: 'FETCH_TODO',
 		payload: axios({
 			method: 'GET',
-			url: 'http://localhost:3000/api/todo'
+			url: 'http://192.168.0.37:3000/api/todos'
 		})
 	};
 }
@@ -15,7 +15,18 @@ export function createTodo(data){
 		type: 'CREATE_TODO',
 		payload: axios({
 			method: 'POST',
-			url: 'http://localhost:3000/api/todo',
+			url: 'http://192.168.0.37:3000/api/todos',
+			data: data
+		})
+	}
+}
+
+export function updateTodo(id, data){
+	return {
+		type: 'UPDATE_TODO',
+		payload: axios({
+			method: 'PUT',
+			url: `http://192.168.0.37:3000/api/todos/${id}`,
 			data: data
 		})
 	}
@@ -26,7 +37,7 @@ export function deleteTodo(id){
 		type: 'DELETE_TODO',
 		payload: axios({
 			method: 'DELETE',
-			url: `http://localhost:3000/api/todo/${id}`
+			url: `http://192.168.0.37:3000/api/todos/${id}`
 		})
 	}
 }

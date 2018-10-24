@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Content, List, Spinner, Container, Header, Item, Input, ListItem, Text, Fab, Icon } from 'native-base';
+import { Content, Body, List, Spinner, Container, Header, Item, Left, Right, Input, ListItem, Text, Fab, Icon, CheckBox } from 'native-base';
+import { View } from 'react-native';
 import { FlatList } from 'react-native';
-import axios from 'axios'
 import { connect } from 'react-redux';
 import { Alert } from 'react-native';
 
@@ -19,31 +19,25 @@ class TodoApp extends Component {
 		this.props.dispatch(fetchTodo())
 	}
 
-	deleteConfirm(todo, id){
+	deleteButton(todo, id){
 		Alert.alert(
 			'Delete Todo',
 			'Deleting ' + todo,
 			[
-				{text: 'delete', onPress: () => this.deleteButton(id)}
+				{text: 'delete', onPress: () => this.props.dispatch(deleteTodo(id))}
 			]
 		)
-	}
-
-	deleteButton(id){
-		this.props.dispatch(deleteTodo(id))
 	}
 
 	render(){
 		if(this.props.data.fetching){
 			return(
-				<Content>
-					<Spinner />
-				</Content>
+				<Spinner />
 			)
 		}
 
 		const Filter = this.props.data.todos.filter((item) => {
-			return(item.plan.toLowerCase().indexOf(this.state.search.toLowerCase())!==-1)
+			return(item.title.toLowerCase().indexOf(this.state.search.toLowerCase())!==-1)
 		})
 
 		return(
@@ -54,12 +48,36 @@ class TodoApp extends Component {
 						<Input onChangeText={(search) => this.setState({search: search})} placeholder='Search' />
 					</Item>
 				</Header>
-				<Content>
+				<Content style={{ marginBottom: 50 }}>
 					<List>
-					<FlatList
+						<FlatList
 						 data={Filter}
-						 renderItem={({item}) => <ListItem onPress={() => this.deleteConfirm(item.plan, item._id)}><Text>{item.plan}</Text></ListItem>}
-						 keyExtractor={({_id}, index) => _id}
+						 renderItem={({item}) => 
+						 	<ListItem>
+							 	<CheckBox 
+								 onPress={() => {
+								  item.checked? this.setState({checked: false}) : this.setState({checked: true})
+								 }
+								 }
+								 checked={item.checked} />
+								<Body style={{ paddingLeft: 20, paddingRight: 20 }}>
+								 	<Item>
+										<Left>
+											<Text style={{ textDecorationLine: item.checked? "line-through" : "none" }}>{item.title}</Text>
+										</Left>
+										<Right>
+											<Text style={{ textDecorationLine: item.checked? "line-through" : "none" }}>{item.time}</Text>
+										</Right>
+									</Item>
+							 		<Text style={{ textDecorationLine: item.checked? "line-through" : "none" }}>{item.comment}</Text>
+								</Body>
+								<View>
+									<Icon style={{ color: 'black' }} type='Feather' name="edit" onPress={() => alert('Edit ' + item.plan)}/>
+									{item.checked? <Icon style={{ color: 'red', marginTop: 20 }} name="trash" onPress={() => this.deleteButton(item.plan, item._id)}/> : null}
+								</View>
+							</ListItem>
+						}
+						 keyExtractor={({id}, index) => index.toString()}
 						/>
 					</List>
 				</Content>
