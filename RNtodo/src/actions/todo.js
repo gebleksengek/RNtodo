@@ -10,6 +10,16 @@ export function fetchTodo(){
 	};
 }
 
+export function getTodo(id){
+	return {
+		type: 'GET_TODO',
+		payload: axios({
+			method: 'GET',
+			url: `http://192.168.0.37:3000/api/todos/${id}`
+		})
+	}
+}
+
 export function createTodo(data){
 	return {
 		type: 'CREATE_TODO',
@@ -37,7 +47,7 @@ export function deleteTodo(id){
 		type: 'DELETE_TODO',
 		payload: axios({
 			method: 'DELETE',
-			url: `http://192.168.0.37:3000/api/todos/${id}`
+			url: `http://192.168.0.37:3000/api/todos/${id}`,
 		})
 	}
 }

@@ -5,7 +5,7 @@ import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { Alert } from 'react-native';
 
-import { fetchTodo, deleteTodo } from '../actions/todo';
+import { fetchTodo, deleteTodo, updateTodo, getTodo } from '../actions/todo';
 
 class TodoApp extends Component {
 	constructor(){
@@ -17,6 +17,17 @@ class TodoApp extends Component {
 
 	componentDidMount(){
 		this.props.dispatch(fetchTodo())
+	}
+
+	checkedButton(id, check){
+		this.props.dispatch(updateTodo(id, {
+			checked: !check
+		}))
+	}
+
+	editButton(id){
+		this.props.dispatch(getTodo(id))
+		.then(() => this.props.navigation.navigate('Edit'))
 	}
 
 	deleteButton(todo, id){
@@ -55,10 +66,7 @@ class TodoApp extends Component {
 						 renderItem={({item}) => 
 						 	<ListItem>
 							 	<CheckBox 
-								 onPress={() => {
-								  item.checked? this.setState({checked: false}) : this.setState({checked: true})
-								 }
-								 }
+								 onPress={() => this.checkedButton(item.id, item.checked)}
 								 checked={item.checked} />
 								<Body style={{ paddingLeft: 20, paddingRight: 20 }}>
 								 	<Item>
@@ -66,14 +74,14 @@ class TodoApp extends Component {
 											<Text style={{ textDecorationLine: item.checked? "line-through" : "none" }}>{item.title}</Text>
 										</Left>
 										<Right>
-											<Text style={{ textDecorationLine: item.checked? "line-through" : "none" }}>{item.time}</Text>
+											<Text style={{ textDecorationLine: item.checked? "line-through" : "none" }}>{new Date(item.time).toLocaleString()}</Text>
 										</Right>
 									</Item>
 							 		<Text style={{ textDecorationLine: item.checked? "line-through" : "none" }}>{item.comment}</Text>
 								</Body>
 								<View>
-									<Icon style={{ color: 'black' }} type='Feather' name="edit" onPress={() => alert('Edit ' + item.plan)}/>
-									{item.checked? <Icon style={{ color: 'red', marginTop: 20 }} name="trash" onPress={() => this.deleteButton(item.plan, item._id)}/> : null}
+									<Icon style={{ color: 'black' }} type='Feather' name="edit" onPress={() => this.editButton(item.id)}/>
+									{item.checked? <Icon style={{ color: 'red', marginTop: 20 }} name="trash" onPress={() => this.deleteButton(item.title, item.id)}/> : null}
 								</View>
 							</ListItem>
 						}

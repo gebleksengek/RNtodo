@@ -3,12 +3,11 @@ import { FooterTab, Form, Label, Spinner, Text, Content, Container, Item, Footer
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-import { createTodo } from '../actions/todo';
+import { updateTodo } from '../actions/todo';
 
 // import '../components/Redux';
 
-class AddTodo extends Component {
-
+class EditTodo extends Component {
 	constructor(){
 		super();
 		this.state = {
@@ -17,15 +16,25 @@ class AddTodo extends Component {
 			comment: '',
 			time: null
 		}
-	}
+    }
 
-	addButton = () => {
-		this.props.dispatch(createTodo({
+    componentDidMount(){
+        this.props.data.editTodo.map(item => {
+            this.setState({
+                id: item.id,
+                title: item.title,
+                comment: item.comment,
+                time: new Date(item.time).toLocaleString(),
+                checked: item.checked
+            })
+        })
+    }
+
+	updateButton = () => {
+		this.props.dispatch(updateTodo( this.state.id, {
 			title: this.state.title,
 			comment: this.state.comment,
 			time: this.state.time,
-			createdAt: this.state.time,
-			updatedAt: this.state.time
 		})).then(() => {
 			this.props.navigation.goBack()
 		})
@@ -53,10 +62,10 @@ class AddTodo extends Component {
 			)
 		}else{
 			submitButton = (
-				<Button block style={{ backgroundColor: '#2ecc71' }} onPress={this.addButton}>
+				<Button block style={{ backgroundColor: '#2ecc71' }} onPress={this.updateButton}>
 					<Text style={{ fontSize: 15, color: 'white' }}>Add</Text>
 				</Button>
-			)
+            )
 		}
 
 		return(
@@ -65,11 +74,11 @@ class AddTodo extends Component {
 					<Form>
 						<Item floatingLabel>
 							<Label>Title</Label>
-							<Input onChangeText={(text) => this.setState({ title: text })} />
+							<Input value={this.state.title} onChangeText={(text) => this.setState({ title: text })} />
 						</Item>
 						<Item floatingLabel>
 							<Label>Comment</Label>
-							<Input onChangeText={(text) => this.setState({ comment: text })}/>
+							<Input value={this.state.comment} onChangeText={(text) => this.setState({ comment: text })}/>
 						</Item>
 						<Item stackedLabel>
 							<Label>Date</Label>
@@ -100,4 +109,4 @@ const mapStateToProps = (state) => ({
 	data: state.todoReducer
 })
 
-export default connect(mapStateToProps)(AddTodo)
+export default connect(mapStateToProps)(EditTodo)

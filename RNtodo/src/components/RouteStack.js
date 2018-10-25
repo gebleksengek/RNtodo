@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation';
 
 import TodoApp from '../screens/TodoApp';
 import AddTodo from '../screens/AddTodo';
+import EditTodo from '../screens/EditTodo';
 
 RouteStack = createStackNavigator({
 	Main: {
@@ -23,6 +24,20 @@ RouteStack = createStackNavigator({
 		screen: AddTodo,
 		navigationOptions: {
 			title: 'Add Todo',
+			headerTintColor: 'white',
+			headerTitleStyle: {
+				color: 'white',
+				fontWeight: 'bold'
+			},
+			headerStyle: {
+				backgroundColor: '#2ecc71'
+			}
+		}
+	},
+	Edit: {
+		screen: EditTodo,
+		navigationOptions: {
+			title: 'Edit Todo',
 			headerTintColor: 'white',
 			headerTitleStyle: {
 				color: 'white',
