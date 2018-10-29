@@ -5,9 +5,9 @@ import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { Alert } from 'react-native';
 
-import { fetchTodo, deleteTodo, updateTodo, getTodo } from '../actions/todo';
+import { fetchUser, getUser, deleteUser } from '../actions/user';
 
-class TodoApp extends Component {
+class UserList extends Component {
 	constructor(){
 		super()
 		this.state = {
@@ -16,26 +16,20 @@ class TodoApp extends Component {
 	}
 
 	componentDidMount(){
-		this.props.dispatch(fetchTodo())
-	}
-
-	checkedButton(id, check){
-		this.props.dispatch(updateTodo(id, {
-			checked: !check
-		}))
+		this.props.dispatch(fetchUser())
 	}
 
 	editButton(id){
-		this.props.dispatch(getTodo(id))
-		.then(() => this.props.navigation.navigate('Edit'))
+		this.props.dispatch(getUser(id))
+		.then(() => this.props.navigation.navigate('EditUser'))
 	}
 
-	deleteButton(todo, id){
+	deleteButton(name, id){
 		Alert.alert(
 			'Delete Todo',
-			'Deleting ' + todo,
+			'Deleting ' + name,
 			[
-				{text: 'delete', onPress: () => this.props.dispatch(deleteTodo(id))}
+				{text: 'delete', onPress: () => this.props.dispatch(deleteUser(id))}
 			]
 		)
 	}
@@ -47,8 +41,8 @@ class TodoApp extends Component {
 			)
 		}
 
-		const Filter = this.props.data.todos.filter((item) => {
-			return(item.title.toLowerCase().indexOf(this.state.search.toLowerCase())!==-1)
+		const Filter = this.props.data.users.filter((item) => {
+			return(item.name.toLowerCase().indexOf(this.state.search.toLowerCase())!==-1)
 		})
 
 		return(
@@ -65,23 +59,17 @@ class TodoApp extends Component {
 						 data={Filter}
 						 renderItem={({item}) => 
 						 	<ListItem>
-							 	<CheckBox 
-								 onPress={() => this.checkedButton(item.id, item.checked)}
-								 checked={item.checked} />
 								<Body style={{ paddingLeft: 20, paddingRight: 20 }}>
 								 	<Item>
 										<Left>
-											<Text style={{ textDecorationLine: item.checked? "line-through" : "none" }}>{item.title}</Text>
+											<Text>{item.name}</Text>
 										</Left>
-										<Right>
-											<Text style={{ textDecorationLine: item.checked? "line-through" : "none" }}>{new Date(item.time).toLocaleString()}</Text>
-										</Right>
 									</Item>
-							 		<Text style={{ textDecorationLine: item.checked? "line-through" : "none" }}>{item.comment}</Text>
+							 		<Text>{item.gender}</Text>
 								</Body>
 								<View>
 									<Icon style={{ color: 'black' }} type='Feather' name="edit" onPress={() => this.editButton(item.id)}/>
-									{item.checked? <Icon style={{ color: 'red', marginTop: 20 }} name="trash" onPress={() => this.deleteButton(item.title, item.id)}/> : null}
+									<Icon style={{ color: 'red', marginTop: 20 }} name="trash" onPress={() => this.deleteButton(item.name, item.id)}/>
 								</View>
 							</ListItem>
 						}
@@ -94,27 +82,17 @@ class TodoApp extends Component {
 				 direction='up'
 				 style={{ backgroundColor: '#2ecc71' }}
 				 position='bottomRight'
-				 onPress={() => {this.props.navigation.navigate('Add')}}
+				 onPress={() => {this.props.navigation.navigate('AddUser')}}
 				>
 					<Text style={{ fontWeight: 'bold' }}>+</Text>
 				</Fab>
-				<Fab
-				 active={8}
-				 direction='up'
-				 style={{ backgroundColor: '#2ecc71' }}
-				 position='bottomLeft'
-				 onPress={() => {this.props.navigation.navigate('User')}}
-				>
-					<Icon type='Feather' name='users'/>
-				</Fab>
-				
 			</Container>
 		);
 	}
 }
 
 const mapStateToProps = (state) => ({
-	data: state.todoReducer
+	data: state.userReducer
 });
 
-export default connect(mapStateToProps)(TodoApp);
+export default connect(mapStateToProps)(UserList);

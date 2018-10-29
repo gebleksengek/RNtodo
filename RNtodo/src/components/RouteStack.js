@@ -4,6 +4,9 @@ import { createStackNavigator } from 'react-navigation';
 import TodoApp from '../screens/TodoApp';
 import AddTodo from '../screens/AddTodo';
 import EditTodo from '../screens/EditTodo';
+import UserList from '../screens/UserList';
+import AddUser from '../screens/AddUser';
+import EditUser from '../screens/EditUser';
 
 RouteStack = createStackNavigator({
 	Main: {
@@ -47,7 +50,49 @@ RouteStack = createStackNavigator({
 				backgroundColor: '#2ecc71'
 			}
 		}
-	}
+	},
+	User: {
+		screen: UserList,
+		navigationOptions: {
+			title: 'User List',
+			headerTintColor: 'white',
+			headerTitleStyle: {
+				color: 'white',
+				fontWeight: 'bold'
+			},
+			headerStyle: {
+				backgroundColor: '#2ecc71'
+			}
+		}
+	},
+	AddUser: {
+		screen: AddUser,
+		navigationOptions: {
+			title: 'Add User',
+			headerTintColor: 'white',
+			headerTitleStyle: {
+				color: 'white',
+				fontWeight: 'bold'
+			},
+			headerStyle: {
+				backgroundColor: '#2ecc71'
+			}
+		}
+	},
+	EditUser: {
+		screen: EditUser,
+		navigationOptions: {
+			title: 'Edit User',
+			headerTintColor: 'white',
+			headerTitleStyle: {
+				color: 'white',
+				fontWeight: 'bold'
+			},
+			headerStyle: {
+				backgroundColor: '#2ecc71'
+			}
+		}
+	},
 },
 {
 	headerLayoutPreset: 'center'
